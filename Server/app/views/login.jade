@@ -1,0 +1,16 @@
+extends layout
+
+block title
+    title Sign In
+block styles
+    link(rel='stylesheet', href='/stylesheets/signin.css')
+block content
+    form(action='/login', method='post' role="form").form-signin
+        h2.form-signin-heading Please Sign In
+        input(type='email', name='email' placeholder='Email' autofocus).form-control
+        input(type='password', name='password' placeholder="Password").form-control
+        label.checkbox Remember me
+            input(type='checkbox' value='remember-me')            
+        input(type='submit', value='Log In').btn.btn-lg.btn-primary.btn-block
+        hr
+        a(href="/auth/facebook").btn.btn-lg.btn-block Log In With Facebook

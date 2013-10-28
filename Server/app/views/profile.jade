@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    if user.name
+        h1 #{user.name}'s Profile
+    else
+        h1 #{user.email}'s Profile
+    
+    a(href="/logout") Logout

@@ -1,0 +1,2 @@
+Express server listening on port \\.\pipe\5fbabdc5-fa9f-489a-8166-2fa1c5341edb
+[90mGET /signup [32m200 [90m1052ms - 1.41kb[0m

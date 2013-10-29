@@ -1,0 +1,13 @@
+connect.multipart() will be removed in connect 3.0
+visit https://github.com/senchalabs/connect/wiki/Connect-3.0 for alternatives
+connect.limit() will be removed in connect 3.0
+Application has thrown an uncaught exception and is terminated:
+Error: failed to connect to [localhost:27017]
+    at null.<anonymous> (C:\Users\ptrou_000\node_modules\mongoose\node_modules\mongodb\lib\mongodb\connection\server.js:540:74)
+    at EventEmitter.emit (events.js:106:17)
+    at null.<anonymous> (C:\Users\ptrou_000\node_modules\mongoose\node_modules\mongodb\lib\mongodb\connection\connection_pool.js:140:15)
+    at EventEmitter.emit (events.js:98:17)
+    at Socket.<anonymous> (C:\Users\ptrou_000\node_modules\mongoose\node_modules\mongodb\lib\mongodb\connection\connection.js:478:10)
+    at Socket.EventEmitter.emit (events.js:95:17)
+    at net.js:441:14
+    at process._tickCallback (node.js:415:13)

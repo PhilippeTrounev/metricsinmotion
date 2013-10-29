@@ -1,0 +1,43 @@
+{
+  "name": "ethercalc",
+  "description": "Multi-User Spreadsheet Server",
+  "version": "0.20131005.0",
+  "homepage": "http://ethercalc.net/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/audreyt/ethercalc"
+  },
+  "dependencies": {
+    "redis": "0.8.2",
+    "uuid-pure": "*",
+    "optimist": "*",
+    "zappajs": "0.4.x",
+    "cors": "*",
+    "LiveScript": "1.2.x",
+    "webworker-threads": "0.4.x"
+  },
+  "optionalDependencies": {
+    "webworker-threads": "0.4.x"
+  },
+  "directories": {
+    "bin": "./bin"
+  },
+  "subdomain": "ethercalc",
+  "scripts": {
+    "start": "app.js",
+    "prepublish": "node node_modules/LiveScript/bin/lsc -c package.json.ls || lsc -c package.json.ls || echo"
+  },
+  "engines": {
+    "node": ">= 0.8.x"
+  },
+  "bin": {
+    "ethercalc": "bin\\ethercalc"
+  },
+  "readme": "# EtherCalc\n\n* Introduction:\n    * English: https://gist.github.com/3978463\n    * 中文版: https://gist.github.com/3985324\n* Language: [LiveScript](http://livescript.net/)\n* Runtime: [Node.js](http://nodejs.org/) (0.8+ preferred)\n* Services: [Redis](http://redis.io) (2.4+; fall-back to on-disk JSON storage if not present)\n    * Multi-server is supported _only_ when running with Redis\n    * Note to Redis 2.2 users (e.g. on Ubuntu 12.04): Please disable the `timeout 300` setting in `/etc/redis.conf`, or upgrade to Redis 2.4+ if possible at all. For more details, see [#49](https://github.com/audreyt/ethercalc/issues/49#issuecomment-25331595).\n* Browsers tested: Safari, Chrome, Firefox, IE.\n* Integrated with content management systems:\n    * [Socialtext](http://www.socialtext.com/)\n    * [Drupal](https://drupal.org/project/sheetnode)\n* Overview:\n    * English: http://ethercalc.net/\n    * 中文版: http://ethercalc.tw/\n\n## Installation\n\n    npm i -g ethercalc\n    ethercalc\n\nOr install with our [Docker](http://www.docker.io/) image, which comes with\nbuilt-in Redis server and webworker-threads support:\n\n    # Runs at port 6967 (default)\n    docker run -v /var/lib/redis:/redis:rw audreyt/ethercalc\n\n    # Runs at another port, for example 8080\n    docker run -p 8080:6967 -v /var/lib/redis:/redis:rw audreyt/ethercalc\n\nNote the use of `-v` flag to store the Redis database on `/var/lib/redis` in\nthe host server. In Docker versions 0.4.x, the flag was called `-b` instead.\n\n## REST API\n\nNote that POST endpoints accept only `application/json` requests,\nand will reject regular form posts.\n\n### GET /_/page\nFetch the page as a serialization in SocialCalc save format.\n\n### PUT /_/page\nReplaces the page with a serialization in SocialCalc save format.\n\nAlso takes a CSV structure that contains the new spreadsheet's content.\n\n### POST /_\n\nTakes a JSON structure with `room` and `snapshot` fields.\n\nReplaces the page with a serialization in Socialtext save format.\nIf `room` is not specified, returns a new page.\n\nAlso takes a CSV structure that contains the new spreadsheet's content.\n\n### POST /_/page\n\nTakes a JSON structure with a `command` field (either as a string\nor an array of strings), or a plain-text command string.\n\nRuns one or more commands specified in the `command` field.\n\nAlso takes a CSV structure that contains fields to be appended to\nthe first column after the last row.\n\n### GET /_/page/cells\nReturns a JSON representation of all defined cells in the page.\n\n### GET /_/page/cells/A1\nReturns a JSON representation of a single cell in the page.\n\n### GET /_/page/html\nReturns a HTML rendering of the page. (GET /page.html also works.)\n\n### GET /_/page/csv\nReturns a CSV rendering of the page. (GET /page.csv also works.)\n\n## Flags\n\n### Using SSL: `--keyfile` / `--certfile`\n\n    openssl genrsa -out ethercalc-key.pem 1024\n    openssl req -new -key ethercalc-key.pem -out certrequest.csr\n    openssl x509 -req -in certrequest.csr -signkey ethercalc-key.pem -out ethercalc-cert.pem\n    ethercalc --keyfile ethercalc-key.pem --certfile ethercalc-cert.pem\n\n### Prefers polling over Websocket: `--polling`\n\nUseful when running behind a proxy without WebSocket support.\n\n### Enable Cross-Origin Resource Sharing: `--cors`\n\nUseful when setting up EtherCalc as a public REST API server.\n\n### URL Prefix: `--basepath /path/prefix`\n\nUseful when running under an URL rewriter.\n\n### Access Control: `--key secret`\n\nOffers read-write vs. read-only modes. See issues [#1](https://github.com/audreyt/ethercalc/issues/1) and [#4](https://github.com/audreyt/ethercalc/issues/4) for details on setting this up.\n\n### Disable server-side WebWorkers: `--vm`\n\nRuns a single-thread background loop with `vm.createContext` instead of `webworker-threads`.\n\nUseful for running custom functions in server side that requires full VM access.\n\n### Expires inactive spreadsheets: `--expire 86400`\n\nDeletes a spreadsheet's content after N seconds of inactivity. Activities include accessing with REST API as well as Web UI, including moving the active cell cursor on an opened page.\n\n# Licensing\n\n### Common Public Attribution License (Socialtext Inc.)\n\n* socialcalcspreadsheetcontrol.js\n* socialcalctableeditor.js\n* images/*\n\n### Artistic License 2.0 (Socialtext Inc.)\n\n* formatnumber2.js \n* formula1.js \n* socialcalc-3.js \n* socialcalcconstants.js \n* socialcalcpopup.js \n\n### MIT License (John Resig, The Dojo Foundation)\n\n* static/jquery.js \n\n### CC0 Public Domain (唐鳳)\n\n* src/*.ls\n",
+  "readmeFilename": "README.mkdn",
+  "bugs": {
+    "url": "https://github.com/audreyt/ethercalc/issues"
+  },
+  "_id": "ethercalc@0.20131005.0",
+  "_from": "ethercalc@"
+}
